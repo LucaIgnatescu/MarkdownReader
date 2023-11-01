@@ -1,33 +1,18 @@
-The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
-
-(__TODO__: your project name)
-
-# Shoppy Shoperson 
+# Markdown Reader
 
 ## Overview
 
-(__TODO__: a brief one or two paragraph, high-level description of your project)
-
-This application will allow users to upload markdown files. Users will have a list of uploaded files. Clickin on one of these files will display it in the browser as html with a default style template. 
+This application will allow users to upload markdown files. Users will have 
+a list of uploaded files. Clicking on one of these files will display it in the browser as html with a default style template. 
 
 Basically, it will be a markdown repository with visualizing capabilities similar to what VSCode can do.
 
-
 ## Data Model
-
-(__TODO__: a description of your application's data and their relationships to each other) 
-
-The application will store Users, Lists and Items
-
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
-
 The application will store Users and Files.
 
 * users can have multiple files (via a list of references)
-* the File objects themselves will have references to the user that created them, the actual file binary, as well as metadata about upload-data (more metadata could be added in later iterations)
-
-(__TODO__: sample documents)
+* the File objects themselves will have references to the user that created them
+, the actual file binary, as well as metadata about upload-data (more metadata could be added in later iterations)
 
 ```javascript
 User {
@@ -35,105 +20,71 @@ User {
   hash: //hashed password,
   salt: //password salt,
   files: [] // a list of references to files owned by user
+  //possibly add email later
 }
 
-File{
+File {
+  name: //fileName for user reference,
   owner: //reference to user that created the file,
   data: //binary data of actual markdown file (possibly encrypted),
-  upload-date: //,
+  uploadDate: //,
   size: //size of binary data,
   //possible other metadata
 }
 ```
 
-An Example User:
-
-```javascript
-{
-  username: "shannonshopper",
-  hash: // a password hash,
-  lists: // an array of references to List documents
-}
-```
-
-An Example List with Embedded Items:
-
-```javascript
-{
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
-  ],
-  createdAt: // timestamp
-}
-```
-
-
-## [Link to Commented First Draft Schema](db.mjs) 
-
-(__TODO__: create a first draft of your Schemas in db.mjs and link to it)
+## [Link to Commented First Draft Schema](db.mjs)
 
 ## Wireframes
 
-(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
+I apologize for the horrible drawing.
 
-/list/create - page for creating a new shopping list
+/users/login - login page
 
-![list create](documentation/list-create.png)
+![login](documentation/login.jpeg)
 
-/list - page for showing all shopping lists
+/users/register - sign up page
 
-![list](documentation/list.png)
+![register](documentation/register.jpeg)
 
-/list/slug - page for showing specific shopping list
+/upload - upload a file
 
-![list](documentation/list-slug.png)
+![upload](documentation/upload.jpeg)
+
+/view - view the actual file
+![view](documentation/view.jpeg)
+
+/ - home page
+![index](documentation/index.jpeg)
 
 ## Site map
 
-(__TODO__: draw out a site map that shows how pages are related to each other)
-
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+![map](documentation/map.jpeg)
 
 ## User Stories or Use Cases
 
-(__TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://en.wikipedia.org/wiki/Use_case))
-
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can view my uploaded files
+4. as a user, I can upload new files
+5. as a user, I can delete an uploaded file
 
 ## Research Topics
 
-(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
-
-* (5 points) Integrate user authentication
+* (4 points) Integrate user authentication
     * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+    * I am only going to use Local strategy (no emails), as I would like to post this at some point and I do not trust myself to store actual data
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit)
+* (2 points) Use more advanced mongoose functionality 
+    * custom validators
+    * Schema methods
+    * populate
+* (2 points) Markdown to Html parsing
+    * use showdown [showdown](https://github.com/showdownjs/showdown)
+* (tentative) React/ NextJs
 
-
-## [Link to Initial Main Project File](app.mjs) 
-
-(__TODO__: create a skeleton Express application with a package.json, app.mjs, views folder, etc. ... and link to your initial app.mjs)
+## [Link to Initial Main Project File](app.mjs)
 
 ## Annotations / References Used
-
-(__TODO__: list any tutorials/references/etc. that you've based your code off of)
-
 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
-
+2. [showdown](https://github.com/showdownjs/showdown)
