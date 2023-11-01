@@ -8,9 +8,9 @@ The content below is an example project proposal / requirements document. Replac
 
 (__TODO__: a brief one or two paragraph, high-level description of your project)
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
+This application will allow users to upload markdown files. Users will have a list of uploaded files. Clickin on one of these files will display it in the browser as html with a default style template. 
 
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
+Basically, it will be a markdown repository with visualizing capabilities similar to what VSCode can do.
 
 
 ## Data Model
@@ -22,7 +22,29 @@ The application will store Users, Lists and Items
 * users can have multiple lists (via references)
 * each list can have multiple items (by embedding)
 
+The application will store Users and Files.
+
+* users can have multiple files (via a list of references)
+* the File objects themselves will have references to the user that created them, the actual file binary, as well as metadata about upload-data (more metadata could be added in later iterations)
+
 (__TODO__: sample documents)
+
+```javascript
+User {
+  username: //,
+  hash: //hashed password,
+  salt: //password salt,
+  files: [] // a list of references to files owned by user
+}
+
+File{
+  owner: //reference to user that created the file,
+  data: //binary data of actual markdown file (possibly encrypted),
+  upload-date: //,
+  size: //size of binary data,
+  //possible other metadata
+}
+```
 
 An Example User:
 
