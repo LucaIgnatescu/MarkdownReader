@@ -8,6 +8,7 @@
     "react-dom": "^18"
   },
   "main": "app.mjs",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
