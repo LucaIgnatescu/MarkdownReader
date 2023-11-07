@@ -63,28 +63,47 @@ I apologize for the horrible drawing.
 
 ## User Stories or Use Cases
 
-1. as non-registered user, I can register a new account with the site
-2. as a user, I can log in to the site
-3. as a user, I can view my uploaded files
-4. as a user, I can upload new files
-5. as a user, I can delete an uploaded file
+1. as non-registered user, I can login with GitHub
+2. as a user, I can view my uploaded files
+3. as a user, I can upload new files
+4. as a user, I can delete an uploaded file
 
 ## Research Topics
 
-* (4 points) Integrate user authentication
-    * I'm going to be using passport for user authentication
-    * I am only going to use Local strategy (no emails), as I would like to post this at some point and I do not trust myself to store actual data
+As I finally commited to using NextJS, I have to refactor my research topics to reflect the new challenges I'm facing. I will also be using TypeScript instead of JavaScript, with a custom linter configuration provided by `create-next-app`.
 
-* (2 points) Use more advanced mongoose functionality 
-    * custom validators
-    * Schema methods
-    * populate
-* (2 points) Markdown to Html parsing
-    * use showdown [showdown](https://github.com/showdownjs/showdown)
-* (tentative) React/ NextJs
+
+1. (4 points) NextJS
+    * I think I have a decent working understanding of the fundamentals of the App Router, Data Fetching, and Middleware, and I shall be adding details here as I learn.
+    * File based routing using folders nested in `app`. Each folder has a corresponding `layout.ts` (where components are rendered), `page.tsx` (where the actual jsx is created), and `template.ts` (which is a more dynamic layout).
+    * There is also an option to write route handlers, which basically perform express functionality.
+    * Middleware is configured in a `middleware.ts` file, which runs before components are rendered. Next provides `NextRequest` and `NextResponse` types, which build upon the built in `Request` and `Response` browser API's.  
+    * There are two kinds of components, server and client, which come with different advantages and drawbacks. Main difference is that server side components are rendered exclusively on the server (either statically at build time or dynamically at request time, depending on the functionality), so they don't have access to browser api's, async functions, and standard hooks (`useState, useEffect`). Client components on the other hand can be rendered on the client (like normal React), so they have access to these apis. 
+
+2. (4 points) Next-Auth.Js
+    * This one has been very difficult to research, as the migration of NextJS to the App router caused a lot of documentation to become obsolete. I believe this is a newer framework as well, so figuring it out has been quite difficult. Reference [3] was published as I was about to give up, so I was very lucky.
+    * Main idea is that you have to create an options object that configures your authenticator, specifying the type of authentication you want to use. I will be using `OAuth` with GitHub, but I might add more options later. 
+    * The whole point of NextAuth is that, after you configure the autenticator and call the main `NextAuth` function, it provides you out of the box with almost complete functionality. 
+      * API endpoints to perform authentication, which are configurable (`/api/auth/signin` etc)
+      * Session management for both client and server components. Client components need to use the `useSession()` hook, while Server components have the easier `getServerSession()`. The session object needs to be configured in the authentication provider object. 
+      * Middleware to protect routes.
+    * All in all a very promising framework, but the documentation has to be one of the most confusing things I've ever had to read in my life.  
+
+3. Showdown
+    * The actual markdown to html parser.
+    * This one is very straightfoward to use. Pass in the markdown, get back the html. I have not researched yet if it can handle files well, or how it would handle them, but I will soon get to that as well.
+
+
 
 ## [Link to Initial Main Project File](app.mjs)
 
 ## Annotations / References Used
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [showdown](https://github.com/showdownjs/showdown)
+1. NextJS
+    * [official docs](https://nextjs.org/docs) 
+
+2. Next-Auth 
+    * [YouTube Tutorial](https://www.youtube.com/watch?v=MNm1XhDjX1s)
+    * [official docs](https://next-auth.js.org/)
+
+3. Showdown
+    * [showdown](https://github.com/showdownjs/showdown)
