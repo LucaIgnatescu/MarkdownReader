@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
+import './dbConnect.mts';
 
 const userSchema = new Schema({
   username: { type: String, required: true },

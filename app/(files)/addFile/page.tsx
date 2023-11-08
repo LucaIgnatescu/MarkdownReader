@@ -1,3 +1,6 @@
+import "@/app/_config/dbConnect.mts"
+import "@/app/_config/schemas.mts"
+
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
 
@@ -22,7 +25,14 @@ export default function Page() {
       data: content,
       size: content.length,
     });
-    await newFile.save();
+
+
+    try{
+      await newFile.save();
+    } catch(err){
+      console.error(err);
+      redirect("/addFile");
+    }
     redirect("/");
   }
 

@@ -12,7 +12,7 @@ export default async function Home() {
       <Link href="/addFile"> Add a file </Link>
       <h2>Uploaded Files</h2>
       <ul>
-      {files.map(file => <li>{file.fileName}</li>)}
+      {files.map(file => <li key={file.id}>{file.fileName}</li>)}
       </ul>
     </main>
   );
