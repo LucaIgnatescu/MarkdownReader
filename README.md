@@ -82,11 +82,8 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
 
 2. (4 points) Next-Auth.Js
     * This one has been very difficult to research, as the migration of NextJS to the App router caused a lot of documentation to become obsolete. I believe this is a newer framework as well, so figuring it out has been quite difficult. Reference [3] was published as I was about to give up, so I was very lucky.
-    * Main idea is that you have to create an options object that configures your authenticator, specifying the type of authentication you want to use. I will be using `OAuth` with GitHub, but I might add more options later. 
     * The whole point of NextAuth is that, after you configure the autenticator and call the main `NextAuth` function, it provides you out of the box with almost complete functionality. 
-      * API endpoints to perform authentication, which are configurable (`/api/auth/signin` etc)
-      * Session management for both client and server components. Client components need to use the `useSession()` hook, while Server components have the easier `getServerSession()`. The session object needs to be configured in the authentication provider object. 
-      * Middleware to protect routes.
+    * From the code example, I understand that the way to use it is as follows. You configure the `NextAuth` object with your OAuth provider (in this case GitHub), and export `{handlers, auth}`. `handlers` provides you with REST API routes to handle jwt based authentication, while `auth` is what retrieves the session status, both on the server and client. The session object can be modified with the `jwt` and `session` callbacks, which can be added in the configuration object.  
     * All in all a very promising framework, but the documentation has to be one of the most confusing things I've ever had to read in my life.  
 
 3. Showdown
@@ -95,7 +92,7 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
 
 
 
-## [Link to Initial Main Project File](app.mjs)
+## [Link to Initial Main Project File](app/page.tsx)
 
 ## Annotations / References Used
 1. NextJS
@@ -104,6 +101,7 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
 2. Next-Auth 
     * [YouTube Tutorial](https://www.youtube.com/watch?v=MNm1XhDjX1s)
     * [official docs](https://next-auth.js.org/)
+    * [example app](https://github.com/nextauthjs/next-auth/blob/main/apps/examples/nextjs/components/auth-components.tsx)
 
 3. Showdown
     * [showdown](https://github.com/showdownjs/showdown)
