@@ -2,7 +2,6 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import mongoose from "mongoose";
 import { SessionData } from "@/components/SessionData";
-import { SessionProvider } from "next-auth/react";
 
 export default async function Home() {
   const File = mongoose.model("File");
@@ -17,9 +16,6 @@ export default async function Home() {
 
       <div>
         <p>Session information:</p>
-        <SessionProvider>
-          <SessionData />
-        </SessionProvider>{" "}
       </div>
       <Link href="/addFile"> Add a file </Link>
       <h2>Uploaded Files</h2>

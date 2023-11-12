@@ -1,13 +1,14 @@
-import "@/app/_config/dbConnect.mts"
-import "@/app/_config/schemas.mts"
-
+import "@/app/_config/dbConnect.js"
+import "@/app/_config/schemas.js"
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
 
 const MB16: number = 16777271; //16 mb in bytes
 const File = mongoose.model("File");
 
-export default function Page() {
+export default async function Page() {
+
+
   async function addFile(data: FormData) {
     //server action to upload file
     "use server";
@@ -25,7 +26,6 @@ export default function Page() {
       data: content,
       size: content.length,
     });
-
 
     try{
       await newFile.save();
