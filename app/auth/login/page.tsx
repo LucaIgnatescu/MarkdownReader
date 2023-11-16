@@ -3,18 +3,44 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { SignJWT } from "jose";
 import mongoose from "mongoose";
+import { IUser } from "@/app/_config/schemas";
+import { handleErrorRedirect } from "../utils";
+import bcrypt from "bcrypt";
 
 export default function Page() {
   async function login(e: FormData) {
     "use server";
     //if you can find in database
 
-    const User = mongoose.model('User');
-     
+    const username = (e.get("username") as string) ?? "";
+    const password = (e.get("password") as string) ?? "";
+
+    const UserModel = mongoose.model<IUser>("User");
+
+    const user = await UserModel.findOne({ username }).exec();
+
+    if (!user) {
+      return handleErrorRedirect(
+        "/auth/login",
+        "Username or password does not match."
+      );
+    }
+    const result = bcrypt.compareSync(password, user.password);
+
+    if (result === false) {
+      handleErrorRedirect(
+        "/auth/login",
+        "Username or password does not match."
+      );
+    }
 
     const cookieStore = cookies();
-    const token = await new SignJWT({ joseToken: "hello" })
-      .setProtectedHeader({alg:'HS256', typ: "JWT"})
+    const tokenParams = {
+      userId: user?.id,
+      username,
+    };
+    const token = await new SignJWT(tokenParams)
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setIssuedAt()
       .sign(new TextEncoder().encode(process.env.TOKEN_SECRET));
 

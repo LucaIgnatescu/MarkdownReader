@@ -4,37 +4,34 @@ import { redirect } from "next/navigation";
 import { encode } from "querystring";
 import bcrypt from "bcrypt";
 import { IUser } from "@/app/_config/schemas";
+import { handleErrorRedirect } from "../utils";
 
 export default function Page() {
   async function register(e: FormData) {
     "use server";
-    function handleErrorRedirect(error: string) {
-      const query = encode({ error });
-      redirect("/auth/register?" + query);
-    }
 
     const User = mongoose.model<IUser>("User");
     if (e.get("password") !== e.get("retyped")) {
-      handleErrorRedirect("Passwords do not match!");
+      handleErrorRedirect("/auth/register", "Passwords do not match!");
     }
     const username: string = (e.get("username") as string) ?? " ";
     const password = (e.get("password") as string) ?? " ";
 
     if (await User.exists({ username: username })) {
-      handleErrorRedirect("Username already exists");
+      handleErrorRedirect("/auth/register", "Username already exists");
     }
     /**
      * TODO: add more username checking like lowercase everything etcetcetc
      */
     const saltRounds = 10;
-    let errorCheck:string = "";
+    let errorCheck: string = "";
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       if (err) {
-        handleErrorRedirect("Server error. Please try again");
+        handleErrorRedirect("/auth/register", "Server error. Please try again");
       }
       console.log("made it here");
       try {
-        const newUser = new User<IUser>({ username, password:hash });
+        const newUser = new User<IUser>({ username, password: hash });
         await newUser.save();
         console.log("user successfully created");
       } catch (e) {
@@ -42,8 +39,8 @@ export default function Page() {
         errorCheck = "Server error. Please try again";
       }
     });
-    if (errorCheck !== ""){
-      handleErrorRedirect(errorCheck);
+    if (errorCheck !== "") {
+      handleErrorRedirect("/auth/register", errorCheck);
     }
     redirect("/auth/login");
   }
