@@ -1,5 +1,5 @@
-import "@/app/_config/dbConnect.js"
-import "@/app/_config/schemas.js"
+import "@/app/_config/dbConnect.ts"
+import "@/app/_config/schemas"
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
 

@@ -63,7 +63,8 @@ I apologize for the horrible drawing.
 
 ## User Stories or Use Cases
 
-1. as non-registered user, I can login with GitHub
+1. as a non-registered user, I can register an account with username and password
+2. as a user, I can log in
 2. as a user, I can view my uploaded files
 3. as a user, I can upload new files
 4. as a user, I can delete an uploaded file

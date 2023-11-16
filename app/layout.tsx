@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import "./_config/dbConnect.mts";
-import "./_config/schemas.mts";
+import "./_config/dbConnect.ts";
+import "./_config/schemas.ts";
 
 
 const inter = Inter({ subsets: ['latin'] })
