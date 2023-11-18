@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@/components/client";
 import mongoose from "mongoose";
 import { redirect } from "next/navigation";
-import { encode } from "querystring";
 import bcrypt from "bcrypt";
 import { IUser } from "@/app/_config/schemas";
 import { handleErrorRedirect } from "../utils";
@@ -24,24 +23,34 @@ export default function Page() {
      * TODO: add more username checking like lowercase everything etcetcetc
      */
     const saltRounds = 10;
-    let errorCheck: string = "";
-    bcrypt.hash(password, saltRounds, async (err, hash) => {
-      if (err) {
-        handleErrorRedirect("/auth/register", "Server error. Please try again");
-      }
-      console.log("made it here");
-      try {
-        const newUser = new User<IUser>({ username, password: hash });
-        await newUser.save();
-        console.log("user successfully created");
-      } catch (e) {
-        console.error(e);
-        errorCheck = "Server error. Please try again";
-      }
-    });
-    if (errorCheck !== "") {
-      handleErrorRedirect("/auth/register", errorCheck);
+
+    const hashWrapper = () =>
+      new Promise((resolve, reject) => {
+        bcrypt.hash(password, saltRounds, async (err, hash) => {
+          if (err) {
+            return reject("bcryptError");
+          }
+          try {
+            const newUser = new User<IUser>({ username, password: hash });
+            await newUser.save();
+            console.log("user successfully created");
+          } catch (e) {
+            return reject("mongoError");
+          }
+          resolve("user created");
+        });
+      }); //this function exists because I cannot directly redirect from the callback because bcrypt is buggy in server actions so I have to wrap it in a promise:( 
+
+    try {
+      console.log(await hashWrapper());
+    } catch (e) {
+      console.error(e, "in creating user");
+      handleErrorRedirect(
+        "/auth/register",
+        "Server encountered an error. Please try again"
+      );
     }
+
     redirect("/auth/login");
   }
 

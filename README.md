@@ -18,7 +18,6 @@ The application will store Users and Files.
 User {
   username: //,
   hash: //hashed password,
-  salt: //password salt,
   files: [] // a list of references to files owned by user
   //possibly add email later
 }
@@ -76,16 +75,22 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
 
 1. (4 points) NextJS
     * I think I have a decent working understanding of the fundamentals of the App Router, Data Fetching, and Middleware, and I shall be adding details here as I learn.
-    * File based routing using folders nested in `app`. Each folder has a corresponding `layout.ts` (where components are rendered), `page.tsx` (where the actual jsx is created), and `template.ts` (which is a more dynamic layout).
+    * Next uses file based routing using folders nested in `app`. Each folder has a corresponding `layout.ts` (where components are rendered), `page.tsx` (where the actual jsx is created), and `template.ts` (which is a more dynamic layout).
     * There is also an option to write route handlers, which basically perform express functionality.
-    * Middleware is configured in a `middleware.ts` file, which runs before components are rendered. Next provides `NextRequest` and `NextResponse` types, which build upon the built in `Request` and `Response` browser API's.  
+    * Middleware is configured in a `middleware.ts` file, which runs before components are rendered. Next provides `NextRequest` and `NextResponse` types, which build upon the built in `Request` and `Response` browser API's.
+        * IMPORTANT FACT I DID NOT REALIZE BEFORE: middleware runs as an "edge function", which means that it uses vercel's edge runtime, which is a trimmed down version of node. As such, not every node module is supported here, so it's very important to be mindful of this when writing middleware. I love serverless ! :( 
     * There are two kinds of components, server and client, which come with different advantages and drawbacks. Main difference is that server side components are rendered exclusively on the server (either statically at build time or dynamically at request time, depending on the functionality), so they don't have access to browser api's, async functions, and standard hooks (`useState, useEffect`). Client components on the other hand can be rendered on the client (like normal React), so they have access to these apis. Furthermore, server components do not rerender without a request, while client components do.  
+    * There is also something called a server action, which allows you to post forms to routes without actual api endpoints. That means that in a form's `action` prop, I can simply pass in an async function that runs on the server, without creating a route for the execution of that code. It can also most of what api-routes can do, just without needing an actual endpoint. Pretty neat! (although can be buggy, even though Next says they are stable - they are NOT)
 
-2. (4 points) Next-Auth.Js
-    * This one has been very difficult to research, as the migration of NextJS to the App router caused a lot of documentation to become obsolete. I believe this is a newer framework as well, so figuring it out has been quite difficult. Reference [3] was published as I was about to give up, so I was very lucky.
-    * The whole point of NextAuth is that, after you configure the autenticator and call the main `NextAuth` function, it provides you out of the box with almost complete functionality. 
-    * From the code example, I understand that the way to use it is as follows. You configure the `NextAuth` object with your OAuth provider (in this case GitHub), and export `{handlers, auth}`. `handlers` provides you with REST API routes to handle jwt based authentication, while `auth` is what retrieves the session status, both on the server and client. The session object can be modified with the `jwt` and `session` callbacks, which can be added in the configuration object.  
-    * All in all a very promising framework, but the documentation has to be one of the most confusing things I've ever had to read in my life.  
+2. (4 points) JWT Authentication
+    * I have decided to give up NextAuthJs, as I kept running into issue after issue. 
+    * I will be using a simple username-password jwt based authentication sytem.
+        * User can register an account with username and password.
+        * The user logs in with username and password and, if successful, receives a jwt token that authenticates him.
+        * The token stores his mongodb `ObjectID`, and username. 
+        * Currently, there is no protection against CSRF or any mechanism to revoke the token, or any plans to implement this.
+        * I might implement token encryption later, but this is still uncertain.
+        * The library I will be using for JSON web tokens is `jose`, because it runs on the edge runtime.
 
 3. Showdown
     * The actual markdown to html parser.

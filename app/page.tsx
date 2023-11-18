@@ -1,7 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import mongoose from "mongoose";
-import { SessionData } from "@/components/SessionData";
 
 export default async function Home() {
   const File = mongoose.model("File");
