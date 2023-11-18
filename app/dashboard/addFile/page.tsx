@@ -1,37 +1,63 @@
-import "@/app/_config/dbConnect.ts"
-import "@/app/_config/schemas"
+import "@/app/_config/dbConnect.ts";
+import "@/app/_config/schemas";
 import { redirect } from "next/navigation";
-import mongoose from "mongoose";
+import mongoose,  { Types } from "mongoose";
+import { cookies } from "next/headers";
+import { jwtVerify } from "jose";
+import { IFile , IUser} from "@/app/_config/schemas";
 
 const MB16: number = 16777271; //16 mb in bytes
-const File = mongoose.model("File");
+const FileModel = mongoose.model("File");
+const UserModel = mongoose.model<IUser>("User");
 
 export default async function Page() {
-
-
   async function addFile(data: FormData) {
     //server action to upload file
     "use server";
-    const filedata: ArrayBuffer = await (
-      data.get("fileContent") as File
-    ).arrayBuffer();
-    const content: Buffer = Buffer.from(filedata);
+    const cookieStore = cookies();
+    const token = cookieStore.get("authToken")?.value as string;
 
-    if (content.BYTES_PER_ELEMENT * content.length > MB16) {
-      redirect("./addFile");
+    let userId,username;
+
+    try {
+      const { payload, protectedHeader } = await jwtVerify(
+        token,
+        new TextEncoder().encode(process.env.TOKEN_SECRET)
+      );
+      userId = payload.userId;
+      username = payload.username;
+    } catch (err) {
+      redirect("/auth/login");
     }
 
-    const newFile = new File({
-      fileName: data.get("fileName"),
+    
+    const fileData: File = data.get("fileContent") as File;
+
+    if (fileData.type !== 'text/markdown'){
+      redirect("/dashboard/addFile");
+    }
+
+    const content: Buffer = Buffer.from(await fileData.arrayBuffer());
+
+    if (content.BYTES_PER_ELEMENT * content.length > MB16) {
+      redirect("/dashboard/addFile");
+    }
+
+    const newFile = new FileModel<IFile>({
+      fileName: data.get("fileName") as string,
       data: content,
       size: content.length,
+      owner: userId as Types.ObjectId
     });
 
-    try{
+
+    try {
+      await UserModel.findByIdAndUpdate(userId, {$push: {"files":newFile}});
       await newFile.save();
-    } catch(err){
+
+    } catch (err) {
       console.error(err);
-      redirect("/addFile");
+      redirect("/dashboard/addFile");
     }
     redirect("/");
   }

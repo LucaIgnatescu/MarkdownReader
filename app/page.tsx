@@ -16,7 +16,7 @@ export default async function Home() {
       <div>
         <p>Session information:</p>
       </div>
-      <Link href="/addFile"> Add a file </Link>
+      <Link href="/dashboard/addFile"> Add a file </Link>
       <h2>Uploaded Files</h2>
       <ul>
         {files.map((file) => (

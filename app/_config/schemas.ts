@@ -27,7 +27,7 @@ const fileSchema = new Schema<IFile>({
   data: { type: Buffer, required: true }, //binary data of actual markdown file (possibly encrypted),
   // uploadDate: {type: Date, required:true},
   size: { type: Number, required: true }, //size of binary data,
-  owner: { type: Schema.Types.ObjectId, ref: "User", requried: true }, //file can only have one owner
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true }, //file can only have one owner
 });
 
 if (!mongoose.models.User) mongoose.model<IUser>("User", userSchema);
