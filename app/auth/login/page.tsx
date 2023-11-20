@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { SignJWT } from "jose";
 import mongoose from "mongoose";
 import { IUser } from "@/app/_config/schemas";
-import { handleErrorRedirect } from "../utils";
+import { handleErrorRedirect } from "@/utils";
 import bcrypt from "bcrypt";
 
 export default function Page() {

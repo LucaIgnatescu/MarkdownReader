@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { IUser } from "@/app/_config/schemas";
-import { handleErrorRedirect } from "../utils";
+import { handleErrorRedirect } from "@/utils";
 
 export default function Page() {
   async function register(e: FormData) {
