@@ -38,22 +38,22 @@ File {
 
 I apologize for the horrible drawing.
 
-/users/login - login page
+/auth/login - login page
 
 ![login](documentation/login.jpeg)
 
-/users/register - sign up page
+/auth/register - sign up page
 
 ![register](documentation/register.jpeg)
 
-/upload - upload a file
+/dashboard/addFile - upload a file
 
 ![upload](documentation/upload.jpeg)
 
-/view - view the actual file
+/dashboard/view - view the actual file
 ![view](documentation/view.jpeg)
 
-/ - home page
+/dashboard - home page
 ![index](documentation/index.jpeg)
 
 ## Site map

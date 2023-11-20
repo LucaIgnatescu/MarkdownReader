@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import mongoose from "mongoose";
+import { UserData, TestComponent } from "@/components/client";
 
 export default async function Home() {
   const File = mongoose.model("File");
@@ -23,6 +24,10 @@ export default async function Home() {
           <li key={file.id}>{file.fileName}</li>
         ))}
       </ul>
+
+      <UserData>
+        <TestComponent></TestComponent>
+      </UserData>
     </main>
   );
 }
