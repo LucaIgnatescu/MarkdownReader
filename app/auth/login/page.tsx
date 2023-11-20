@@ -49,7 +49,7 @@ export default function Page() {
       value: token as string,
     });
 
-    redirect("/dashboard/addFile");
+    redirect("/dashboard");
   }
 
   return (

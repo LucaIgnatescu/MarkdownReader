@@ -59,11 +59,14 @@ export default async function Page() {
       console.error(err);
       redirect("/dashboard/addFile");
     }
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return (
     <>
+    <p>
+      This is where you upload files. It should only accept .md files. Any other extension should redirect you back here without any actual upload. It will look like nothing happened. I have not implemented messages for the user for this route yet. 
+    </p>
       <form action={addFile}>
         <label>
           File Name: <input name="fileName" />

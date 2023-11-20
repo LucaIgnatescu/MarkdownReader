@@ -10,20 +10,10 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <p>
-        For now, you can upload files and view a list of files that have already
-        been uploaded
+        This is the main page. To get started,
+        <Link href="/auth/register"> register</Link>. Afterwards, you will be
+        redirected to <Link href="/auth/login"> login</Link>.
       </p>
-      <p> Ownership will be implemented after authentication</p>
-
-      <div>
-        <h2>Session information:</h2>
-        <UserData>
-          <UserInfo></UserInfo>
-        </UserData>
-      </div>
-      <Link href="/dashboard/addFile"> Add a file </Link>
-      <h2>User files</h2>
-      <FileList />
     </main>
   );
 }

@@ -1,7 +1,16 @@
 import { verifyToken } from "@/utils";
 import { cookies } from "next/headers";
-import mongoose from "mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
 import { IFile , IUser} from "@/app/_config/schemas";
+import Link from "next/link";
+
+
+export function File({file}: {file: HydratedDocument<IFile>}){
+  return <>
+    <Link href={'/dashboard/view/' + file._id}>{file.fileName}</Link>
+  </>
+}
+
 
 export async function FileList() {
   const UserModel = mongoose.model<IUser>("User");
@@ -25,7 +34,9 @@ export async function FileList() {
       <div id="fileList">
         <ul>
           {files?.map((file: any) => (
-            <li key={file?._id}>{file?.fileName}</li>//make this a file component
+            <li key={file?._id}>
+              <File file = {file}></File>
+            </li>//make this a file component
           ))}
         </ul>
       </div>

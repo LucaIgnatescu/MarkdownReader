@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
-interface SessionInfo {
+export interface SessionInfo {
   userId: string;
   username: string;
   [k: string]: unknown;
