@@ -1,4 +1,6 @@
 import Link from "next/link";
+import '@/app/_config/dbConnect';
+import '@/app/_config/schemas';
 import styles from "./page.module.css";
 import mongoose from "mongoose";
 import { UserData, UserInfo } from "@/components/client";

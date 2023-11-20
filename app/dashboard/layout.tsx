@@ -1,4 +1,6 @@
 import Link from "next/link";
+import '@/app/_config/dbConnect';
+import '@/app/_config/schemas';
 
 export default function Layout({children}: {children:React.ReactNode}){
   return <>

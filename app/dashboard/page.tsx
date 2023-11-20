@@ -1,4 +1,6 @@
 import { UserData, UserInfo } from "@/components/client";
+import '@/app/_config/dbConnect';
+import '@/app/_config/schemas';
 import { FileList } from "@/components/server";
 
 export default function Page() {

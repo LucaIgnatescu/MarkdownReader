@@ -1,3 +1,6 @@
+import '@/app/_config/dbConnect';
+import '@/app/_config/schemas';
+
 import { ErrorMessage } from "@/components/client";
 import mongoose from "mongoose";
 import { redirect } from "next/navigation";
