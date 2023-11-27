@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, redirect } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { MouseEventHandler, createContext, useContext, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { decodeJwt} from "jose";
 import type {Session} from "@/utils";
@@ -52,3 +52,18 @@ export function UserInfo() {
   );
 }
 
+
+export function TestDelete(){
+  function testDelete(){
+    const id = "65652320d55996a60076265e";
+
+    fetch('/api/file/' + id, {
+      method:"DELETE"
+    }).then(response => {
+      console.log(response.ok);
+      return response.json();
+    })
+    .then(data => console.log(data))
+  }
+  return <button onClick={testDelete}>Test</button>
+}

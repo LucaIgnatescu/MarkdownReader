@@ -1,13 +1,11 @@
 import Link from "next/link";
 import '@/app/_config/dbConnect';
 import '@/app/_config/schemas';
+import { NavBar } from "@/components/server";
 
 export default function Layout({children}: {children:React.ReactNode}){
   return <>
-  <Link href='/dashboard'>Main Dashboard Page</Link>
-  <br>
-  </br>
-  <Link href='/dashboard/addFile'>Upload a file</Link>
+  <NavBar></NavBar>
   {children}
   </>
 }

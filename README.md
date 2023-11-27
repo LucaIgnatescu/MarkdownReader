@@ -82,7 +82,7 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
     * There are two kinds of components, server and client, which come with different advantages and drawbacks. Main difference is that server side components are rendered exclusively on the server (either statically at build time or dynamically at request time, depending on the functionality), so they don't have access to browser api's, async functions, and standard hooks (`useState, useEffect`). Client components on the other hand can be rendered on the client (like normal React), so they have access to these apis. Furthermore, server components do not rerender without a request or redirect, while client components do.  
     * There is also something called a server action, which allows you to post forms to routes without actual api endpoints. That means that in a form's `action` prop, I can simply pass in an async function that runs on the server, without creating a route for the execution of that code. It can also most of what api-routes can do, just without needing an actual endpoint. Pretty neat! (although can be buggy, even though Next says they are stable - they are NOT)
 
-2. (4 points) JWT Authentication
+2. (2 points) JWT Authentication with Jose
     * I have decided to give up NextAuthJs, as I kept running into issue after issue. 
     * I will be using a simple username-password jwt based authentication sytem.
         * User can register an account with username and password.
@@ -91,10 +91,12 @@ As I finally commited to using NextJS, I have to refactor my research topics to 
         * Currently, there is no protection against CSRF or any mechanism to revoke the token, or any plans to implement this.
         * I might implement token encryption later, but this is still uncertain.
         * The library I will be using for JSON web tokens is `jose`, because it runs on the edge runtime.
+    * Add Jose specific info here
 
-3. Showdown
+3. (1 point) Showdown - Server Side
     * The actual markdown to html parser.
     * This one is very straightfoward to use. Pass in the markdown, get back the html. I have not researched yet if it can handle images well, or how it would handle them, but I will soon get to that as well.
+4. (1 point) Universal Cookie - Client Side
 
 
 

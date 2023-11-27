@@ -1,6 +1,6 @@
-import { UserData, UserInfo } from "@/components/client";
-import '@/app/_config/dbConnect';
-import '@/app/_config/schemas';
+import { TestDelete, UserData, UserInfo } from "@/components/client";
+import "@/app/_config/dbConnect";
+import "@/app/_config/schemas";
 import { FileList } from "@/components/server";
 
 export default function Page() {
@@ -18,6 +18,9 @@ export default function Page() {
       </UserData>
       <h2>Files uploaded by user</h2>
       <FileList></FileList>
+
+      <h2>Delete Test</h2>
+      <TestDelete></TestDelete>
     </>
   );
 }
