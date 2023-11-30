@@ -61,7 +61,7 @@ export default function Page() {
     <>
       <ErrorMessage />
 
-      <form action={register}>
+      <form action={register} className='box form' >
         <label htmlFor="username">Username: </label>
         <input name="username" id="username" type="text" required></input>
         <br></br>
@@ -74,5 +74,5 @@ export default function Page() {
         <input type="submit" value={"Submit!"}></input>
       </form>
     </>
-  );
+  )
 }

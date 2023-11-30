@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import { IFile, IUser } from "@/app/_config/schemas";
 import { verifyToken } from "@/utils";
 import type { SessionInfo } from "@/utils";
+import { SideBar } from "./server";
+import { Content, EditingContext, ViewManager } from "./client";
 
 const UserModel = mongoose.model<IUser>("User");
 
@@ -10,7 +12,7 @@ export default async function Page({ params }: { params: { fileID: string } }) {
   const FileModel = mongoose.model<IFile>("File");
 
   let file;
-  
+
   try {
     file = await FileModel.findById(params.fileID);
     if (file === null) {
@@ -38,6 +40,16 @@ export default async function Page({ params }: { params: { fileID: string } }) {
   const contents: string = file.data.toString();
   const html: string = converter.makeHtml(contents);
 
-  console.log(html);
-  return <main dangerouslySetInnerHTML={{ __html: html }}></main>;
+  return (
+    <div id="filepagewrapper">
+      <ViewManager markdown={contents} fileID={fileID}>
+        <>
+          <SideBar></SideBar>
+          <Content id="fileContent">
+            <div dangerouslySetInnerHTML={{ __html: html }}></div>
+          </Content>
+        </>
+      </ViewManager>
+    </div>
+  );
 }

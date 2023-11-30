@@ -1,21 +1,35 @@
 import Link from "next/link";
-import '@/app/_config/dbConnect';
-import '@/app/_config/schemas';
+import "@/app/_config/dbConnect";
+import "@/app/_config/schemas";
 import styles from "./page.module.css";
-import mongoose from "mongoose";
-import { UserData, UserInfo } from "@/components/client";
-import { FileList } from "@/components/server";
+import { BasicHeader,InfoBox } from "@/components/server";
+
+
+function LoginBox() {
+  return (
+    <div className="login box">
+      <Link href="/auth/register" className="linkbutton">
+        Register
+      </Link>
+      <Link href="/auth/login" className="linkbutton">
+        Login
+      </Link>
+    </div>
+  );
+}
 
 export default async function Home() {
-  const File = mongoose.model("File");
-  const files = await File.find({});
+  const welcomeText = `
+  Welcome! This is Markdown Reader, an app that allows you to upload markdown documents and view them in the browser.
+  Register an account to get started!
+  `;
   return (
     <main className={styles.main}>
-      <p>
-        This is the main page. To get started,
-        <Link href="/auth/register"> register</Link>. Afterwards, you will be
-        redirected to <Link href="/auth/login"> login</Link>.
-      </p>
+      <BasicHeader></BasicHeader>
+      <div className="wrapper">
+        <InfoBox className="info box" text={welcomeText}></InfoBox>
+        <LoginBox></LoginBox>
+      </div>
     </main>
-  );
+  )
 }

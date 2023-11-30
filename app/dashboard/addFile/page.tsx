@@ -20,7 +20,7 @@ export default async function Page() {
     let userId,username;
 
     try {
-      const { payload, protectedHeader } = await jwtVerify(
+      const { payload} = await jwtVerify(
         token,
         new TextEncoder().encode(process.env.TOKEN_SECRET)
       );

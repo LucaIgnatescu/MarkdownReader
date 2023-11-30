@@ -1,11 +1,9 @@
-import "@/app/_config/dbConnect";
-import "@/app/_config/schemas";
-import { NavBar } from "@/components/server";
+import { BasicHeader } from "@/components/server";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <NavBar></NavBar>
+      <BasicHeader></BasicHeader>
       <div className="wrapper">{children}</div>
     </>
   );
