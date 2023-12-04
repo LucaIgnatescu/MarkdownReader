@@ -20,7 +20,7 @@ export async function DELETE(
   let userId, username;
 
   try {
-    const { payload, protectedHeader } = await jwtVerify(
+    const { payload } = await jwtVerify(
       token,
       new TextEncoder().encode(process.env.TOKEN_SECRET)
     );
@@ -50,9 +50,7 @@ export async function DELETE(
       },
     });
 
-    console.log(await UserModel.findById(userId));
-
-    await FileModel.deleteOne({_id: fileID}).exec();
+    await FileModel.deleteOne({ _id: fileID }).exec();
   } catch (err) {
     console.error(err);
     return new Response(null, {
@@ -63,5 +61,5 @@ export async function DELETE(
 
   return Response.json({
     status: "file deleted",
-  });   
+  });
 }

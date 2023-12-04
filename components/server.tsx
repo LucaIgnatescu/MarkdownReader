@@ -14,7 +14,7 @@ export function File({ file }: { file: HydratedDocument<IFile> }) {
   );
 }
 
-export async function FileList({className}: {className?:string}) {
+export async function FileList({ className }: { className?: string }) {
   const UserModel = mongoose.model<IUser>("User");
 
   const payload = await verifyToken();
@@ -34,41 +34,37 @@ export async function FileList({className}: {className?:string}) {
     }
 
     return (
-        <ul className={className}>
-          {files?.map((file: any) => (
-            <li key={file?._id}>
-              <File file={file}></File>
-            </li> //make this a file component
-          ))}
-          </ul>
+      <ul className={className}>
+        {files?.map((file: any) => (
+          <li key={file?._id}>
+            <File file={file}></File>
+          </li> //make this a file component
+        ))}
+      </ul>
     );
   } catch (err) {
     return <p> Error</p>;
   }
 }
 
-export function NavBar() {
-  return (
-    <nav className={style.dashboard}>
-      <Link href="/">Markdown Reader</Link>
-      <Link href="/dashboard">Dashboard</Link>
-      <br></br>
-      <Link href="/dashboard/addFile">Add File</Link>
-    </nav>
-  );
-}
-
 
 export function BasicHeader() {
   return (
     <header className="basicHeader">
-      <Link className="title" href="/">Markdown Reader</Link>
+      <Link className="title" href="/">
+        Markdown Reader
+      </Link>
     </header>
   );
 }
 
-
-export function InfoBox({ text, className }: { text: string, className:string }) {
+export function InfoBox({
+  text,
+  className,
+}: {
+  text: string;
+  className: string;
+}) {
   return (
     <div className={className}>
       <p>{text}</p>

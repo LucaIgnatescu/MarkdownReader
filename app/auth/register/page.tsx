@@ -1,5 +1,5 @@
-import '@/app/_config/dbConnect';
-import '@/app/_config/schemas';
+import "@/app/_config/dbConnect";
+import "@/app/_config/schemas";
 
 import { ErrorMessage } from "@/components/client";
 import mongoose from "mongoose";
@@ -16,15 +16,29 @@ export default function Page() {
     if (e.get("password") !== e.get("retyped")) {
       handleErrorRedirect("/auth/register", "Passwords do not match!");
     }
-    const username: string = (e.get("username") as string) ?? " ";
-    const password = (e.get("password") as string) ?? " ";
+    const username: string = (e.get("username") as string) ?? "";
+    const password = (e.get("password") as string) ?? "";
 
-    if (await User.exists({ username: username })) {
+    if (username === "" || password === "") {
+      handleErrorRedirect("/auth/register", "No field must be left blank");
+    }
+
+    const loweredUsername = username.toLowerCase();
+    let matchesName;
+
+    try {
+      matchesName = (await User.find({}))
+        .map((user) => user.username.toLowerCase())
+        .reduce((acc, currUser) => acc || currUser === loweredUsername, false);
+    } catch (err) {
+      handleErrorRedirect(
+        "/auth/register",
+        "Issue registering account. Please try again."
+      );
+    }
+    if (matchesName) {
       handleErrorRedirect("/auth/register", "Username already exists");
     }
-    /**
-     * TODO: add more username checking like lowercase everything etcetcetc
-     */
     const saltRounds = 10;
 
     const hashWrapper = () =>
@@ -42,7 +56,7 @@ export default function Page() {
           }
           resolve("user created");
         });
-      }); //this function exists because I cannot directly redirect from the callback because bcrypt is buggy in server actions so I have to wrap it in a promise:( 
+      }); //this function exists because I cannot directly redirect from the callback because bcrypt is buggy in server actions so I have to wrap it in a promise:(
 
     try {
       console.log(await hashWrapper());
@@ -59,9 +73,7 @@ export default function Page() {
 
   return (
     <>
-      <ErrorMessage />
-
-      <form action={register} className='box form' >
+      <form action={register} className="box form">
         <label htmlFor="username">Username: </label>
         <input name="username" id="username" type="text" required></input>
         <br></br>
@@ -74,5 +86,5 @@ export default function Page() {
         <input type="submit" value={"Submit!"}></input>
       </form>
     </>
-  )
+  );
 }

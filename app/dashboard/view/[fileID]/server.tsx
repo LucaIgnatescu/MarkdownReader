@@ -1,13 +1,15 @@
 import { FileList } from "@/components/server";
-import { EditMenu } from "./client";
+import { DeleteButton, EditMenu } from "./client";
+import { ErrorMessage } from "@/components/client";
 
 export function SideBar() {
   return (
-    <div id="sidebar">
+    <div id="sidebar" className="fileMenu">
+      <h2>Uploaded Files</h2>
       <FileList className="sidebarFiles"></FileList>
-      <span>Delete</span>
-      <EditMenu></EditMenu>
+      <h2>File Controls</h2>
+      <DeleteButton />
+      <EditMenu className="editMenu"></EditMenu>
     </div>
   );
 }
-

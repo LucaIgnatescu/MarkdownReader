@@ -52,18 +52,48 @@ export function EditMenu({ className }: { className?: string }) {
   const router = useRouter();
 
   const flipEditValue = () => setIsEditing(!isEditing);
+  const saveFile = () => {
+    handleSaveAction(ref.current?.value, fileID)
+      .then(() => router.refresh())
+      .then(flipEditValue);
+  };
+
   return (
     <div className={className}>
       <button onClick={flipEditValue}>Edit</button>
-      <button
-        onClick={() => {
-          handleSaveAction(ref.current?.value, fileID)
-            .then(flipEditValue)
-            .then(() => router.refresh());
-        }}
-      >
+      <button onClick={saveFile} disabled={!isEditing}>
         Save
       </button>
     </div>
+  );
+}
+
+export function DeleteButton() {
+  const { fileID } = useContext(EditingContext);
+  const router = useRouter();
+  function deleteFile() {
+    fetch(`/api/file/${fileID}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Could not delete file.");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data?.status);
+        router.push("/dashboard");
+        router.refresh();
+      })
+      .catch((err) => {
+        console.error(err); //display smth
+      });
+  }
+
+  return (
+    <button onClick={deleteFile} id="deleteBtn">
+      Delete
+    </button>
   );
 }

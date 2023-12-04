@@ -9,6 +9,7 @@
   --header-height: 8vh;
   --content-height: calc(100vh - var(--header-height));
   --border-radius: 40px;
+  --border-style: 1px solid black;
 }
 
 body {
@@ -18,20 +19,30 @@ body {
   height: 100vh;
 }
 
-div {
-  /* background-color: #e5e5e5; */
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
+a:hover {
+  color: white;
+}
+
 nav {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: space-between;
+
   height: var(--header-height);
+  color: #ffffff;
+  background-color: #fca311;
+  /* justify-content:; */
+  border-bottom: 1px solid black;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: row;
   > * {
     padding: 20px;
     margin: 0 20px;
@@ -45,10 +56,6 @@ nav {
     color: #000;
     font-size: larger;
   }
-  align-items: center;
-  color: #ffffff;
-  background-color: #fca311;
-  /* justify-content:; */
 }
 
 main {
@@ -85,6 +92,7 @@ main {
 
 .box {
   background-color: #e5e5e5;
+  border: 1px solid grey;
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
@@ -158,6 +166,9 @@ main {
     text-align: left;
   }
 }
+input:last-child:focus {
+  border: none;
+}
 
 #filepagewrapper {
   display: flex;
@@ -168,9 +179,9 @@ main {
   > :first-child {
     background-color: #e5e5e5;
     width: 30vw;
-    flex:1;
+    flex: 1;
     position: sticky;
-    left:0;
+    left: 0;
   }
 
   > :last-child {
@@ -180,41 +191,109 @@ main {
   }
 }
 
-
-#fileContent{
-  padding:30px;
+#fileContent {
+  padding: 30px;
 }
 
-#sidebar{
+#sidebar {
   display: flex;
   flex-direction: column;
+  border-right: 1px solid #000;
+  text-align: center;
 }
 
-.sidebarFiles{
-  background-color: white;
-
+#sidebar > h2:last-of-type {
+  border-top: 1px solid grey;
+  padding-top: 1rem;
 }
 
-.sidebarFiles{
+.sidebarFiles {
   list-style: none;
   display: flex;
   flex-direction: column;
-  margin:5px;
-  margin-top:40%;
-  padding:10px;
+  margin: 5px;
+  margin-top: 10%;
+  padding: 10px;
   background-color: #fca311;
-  border-radius: calc(var(--border-radius)/2); 
+  border-radius: calc(var(--border-radius) / 2);
 }
 
-
-textarea{
+textarea {
   width: 100%;
   height: 100%;
-  border:none;
+  border: none;
   resize: none;
-  overflow:visible;
+  overflow: visible;
 }
 
-textarea:focus{
+textarea:focus {
   outline: none;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  padding: 1rem;
+}
+
+#signoutBtn {
+  padding-right: 2rem;
+  background: none;
+  border: none;
+}
+#signoutBtn:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.fileMenu > p{
+  text-align: center;
+}
+
+.fileMenu > h2 {
+  text-align: center;
+  border-bottom: 1px solid grey;
+  margin-bottom: 0;
+  padding-bottom: 1rem;
+}
+
+.fileMenu > ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+}
+
+#deleteBtn {
+  background-color: rgb(255, 67, 67);
+  padding: 0.5rem 6em;
+  margin: 1rem auto;
+  border-radius: 20px;
+  width: fit-content;
+  border: 1px solid grey;
+  text-align: center;
+}
+
+.editMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.editMenu > button {
+  padding: 0.5rem 1rem;
+  margin: 1rem auto;
+  margin-top: 0;
+  border-radius: 20px;
+  border: 1px solid grey;
+  &:first-child {
+    background-color: rgb(39, 167, 39);
+  }
+  /* &:last-child{
+    background-color: #14213d;
+    color:white;
+  } */
+
+  &:hover {
+    cursor: pointer;
+  }
 }

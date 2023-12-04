@@ -57,7 +57,6 @@ export default function Page() {
 
   return (
     <>
-      <ErrorMessage />
 
       <form action={login} className='box form'>
         <label htmlFor="username">Username: </label>
