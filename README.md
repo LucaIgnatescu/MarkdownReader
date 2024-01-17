@@ -5,7 +5,11 @@
 This application will allow users to upload markdown files. Users will have
 a list of uploaded files. Clicking on one of these files will display it in the browser as html with a default style template. Users can also edit their files live in the browser.
 
-Basically, it will be a markdown repository with visualizing capabilities similar to what VSCode can do, as well as editing functionality.
+In short, it is a markdown repository with visualizing capabilities similar to what VSCode can do, as well as editing functionality.
+
+## Deployment
+
+The App is deployed on Vercel, at [markdown-reader.vercel.app](https://markdown-reader.vercel.app/), and the actual deployment repository as of right now is [AITDeploy](https://github.com/LucaIgnatescu/AITDeploy), due to this project being developed for one of my classes.
 
 ## Data Model
 
@@ -30,33 +34,8 @@ File {
 }
 ```
 
-## [Link to Commented First Draft Schema](db.mjs)
-
 ## [Final Schema](/app/_config/schemas.ts)
-
-## Wireframes
-
-I apologize for the horrible drawing.
-
-/auth/login - login page
-
-![login](documentation/login.jpeg)
-
-/auth/register - sign up page
-
-![register](documentation/register.jpeg)
-
-/dashboard/addFile - upload a file
-
-![upload](documentation/upload.jpeg)
-
-/dashboard/view/fileID - view the actual file
-![view](documentation/view.jpeg)
-
-/dashboard - home page
-![index](documentation/index.jpeg)
-
-/ - home page for unauthenticated users
+The database service used is MongoDB Atlas, connected to with Mongoose.
 
 ## Site map
 
@@ -73,17 +52,17 @@ I apologize for the horrible drawing.
 
 ## Research Topics
 
-1. (4 points) NextJS
+1. NextJS
 
    - I think I have a decent working understanding of the fundamentals of the App Router, Data Fetching, and Middleware, and I shall be adding details here as I learn.
    - Next uses file based routing using folders nested in `app`. Each folder has a corresponding `layout.ts` (where components are rendered), `page.tsx` (where the actual jsx is created), and `template.ts` (which is a more dynamic layout).
    - There is also an option to write route handlers, which basically perform express functionality.
    - Middleware is configured in a `middleware.ts` file, which runs before components are rendered. Next provides `NextRequest` and `NextResponse` types, which build upon the built in `Request` and `Response` browser API's.
-     - IMPORTANT FACT I DID NOT REALIZE BEFORE: middleware runs as an "edge function", which means that it uses vercel's edge runtime, which is a trimmed down version of node. As such, not every node module is supported here, so it's very important to be mindful of this when writing middleware. I love serverless ! :(
+     - IMPORTANT FACT I DID NOT REALIZE BEFORE: middleware runs as an "edge function", which means that it uses vercel's edge runtime, which is a trimmed down version of node. As such, not every node module is supported here, so it's very important to be mindful of this when writing middleware.
    - There are two kinds of components, server and client, which come with different advantages and drawbacks. Main difference is that server side components are rendered exclusively on the server (either statically at build time or dynamically at request time, depending on the functionality), so they don't have access to browser api's, async functions, and standard hooks (`useState, useEffect`). Client components on the other hand can be rendered on the client (like normal React), so they have access to these apis. Furthermore, server components do not rerender without a request or redirect, while client components do.
    - There is also something called a server action, which allows you to post forms to routes without actual api endpoints. That means that in a form's `action` prop, I can simply pass in an async function that runs on the server, without creating a route for the execution of that code. It can also most of what api-routes can do, just without needing an actual endpoint. Pretty neat! (although can be buggy, even though Next says they are stable - they are NOT)
 
-2. (2 points) JWT Authentication with Jose
+2. JWT Authentication with Jose
 
    - I have decided to give up NextAuthJs, as I kept running into issue after issue.
    - I will be using a simple username-password jwt based authentication sytem.
@@ -96,12 +75,12 @@ I apologize for the horrible drawing.
      - the library provides standard functions to encode and decode JWT tokens like `decodeJWT, encodeJWT` and so forth
      - i assigned this rubric 2 points as it involved both using the library and understanding what token based authentication is
 
-3. (1 point) Showdown: Server Side
+3. Showdown: Server Side
 
    - The actual markdown to html parser.
    - This one is very straightfoward to use. Pass in the markdown, get back the html.
 
-4. (1 point) Universal Cookie: Client Side
+4. Universal Cookie: Client Side
 
    - Library to modify client side cookies.
    - It works very similarly to next's built in `cookie()` function.
