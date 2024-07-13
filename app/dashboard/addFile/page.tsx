@@ -40,12 +40,13 @@ export default async function Page() {
     }
 
     const fileData: File = data.get("fileContent") as File;
+    console.log(fileData);
 
-    if (fileData.type !== "text/markdown") {
-      redirectBack(
-        "Form only accepts markdown (.md) files. Please try a different file."
-      );
-    }
+    // if (fileData.type !== "text/markdown") {
+    //   redirectBack(
+    //     "Form only accepts markdown (.md) files. Please try a different file."
+    //   );
+    // }
 
     const content: Buffer = Buffer.from(await fileData.arrayBuffer());
 
